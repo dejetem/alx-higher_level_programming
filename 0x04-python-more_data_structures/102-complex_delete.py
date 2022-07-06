@@ -3,5 +3,5 @@ def complex_delete(a_dictionary, value):
     lastest = a_dictionary.copy()
     for a, b in lastest.items():
         if b == value:
-            del a_dictionary[k]
+            del a_dictionary[a]
     return a_dictionary
