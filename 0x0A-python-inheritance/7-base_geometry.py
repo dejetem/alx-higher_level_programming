@@ -3,10 +3,10 @@
 
 
 class BaseGeometry:
-    '''BaseGeometry class.'''
+    '''A BaseGeometry class.'''
     def area(self):
-        '''Method to be compute in this area.'''
-        raise Exception('area() has not been implemented')
+        '''Method to compute this area.'''
+        raise Exception('area() is not implemented')
 
     def integer_validator(self, name, value):
         '''Method for validating the value.'''
