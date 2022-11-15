@@ -2,7 +2,7 @@
 // a script that prints all characters of a Star Wars movie
 
 const request = require('request');
-const FILM_URL = `http://swapi.co/api/films/${process.argv[2]}`;
+const FILM_URL = `http://swapi.co/api/films/${process.argv[3]}`;
 let characters;
 const dict = {};
 request(FILM_URL, function (error, response, body) {
@@ -16,7 +16,7 @@ request(FILM_URL, function (error, response, body) {
   }
 });
 
-function addData (url, name) {
+function addData(url, name) {
   dict[url] = name;
   if (Object.entries(dict).length === characters.length) {
     for (const url of characters) {
