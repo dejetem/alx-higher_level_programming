@@ -2,25 +2,25 @@
 // a script that prints all characters of a Star Wars movie
 
 const request = require('request');
-const FILM_URL = `http://swapi.co/api/films/${process.argv[3]}`;
-let characters;
-const dict = {};
-request(FILM_URL, function (error, response, body) {
-  if (error) {
-    throw new Error(error);
-  }
-  characters = JSON.parse(body).characters;
-  for (const url of characters) {
-    request(url, (error, response, body) =>
-      !error && addData(url, JSON.parse(body).name));
-  }
-});
-
-function addData(url, name) {
-  dict[url] = name;
-  if (Object.entries(dict).length === characters.length) {
-    for (const url of characters) {
-      console.log(dict[url]);
+const BASE_URL = 'https://swapi-api.hbtn.io/api';
+if (process.argv.length > 2) {
+  request(`${BASE_URL}/films/${process.argv[2]}/`, (err, res, body) => {
+    if (err) {
+      console.log(err);
     }
-  }
+    const charactersURL = JSON.parse(body).characters;
+    const charactersName = charactersURL.map(
+      url => new Promise((resolve, reject) => {
+        request(url, (err, res, body) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(JSON.parse(body).name);
+        });
+      }));
+
+    Promise.all(charactersName)
+      .then(names => console.log(names.join('\n')))
+      .catch(err => console.log(err));
+  });
 }
